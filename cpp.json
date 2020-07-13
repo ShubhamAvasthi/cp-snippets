@@ -124,6 +124,8 @@
 		],
 		"description": "Inserts my C++ template for Competitive Programming"
 	},
+
+
 	"Segment Tree": {
 		"prefix": "segment-tree",
 		"body": [
@@ -196,6 +198,8 @@
 		],
 		"description": "My segment tree code"
 	},
+
+
 	"Disjoint Set Union": {
 		"prefix": "disjoint_set_union",
 		"body": [
@@ -241,6 +245,8 @@
 		],
 		"description": "My Disjoint Set Union class"
 	},
+
+
 	"Euler's Totient function": {
 		"prefix": "totient",
 		"body": [
@@ -261,6 +267,8 @@
 		],
 		"description": "My Euler's Totient function code"
 	},
+
+
 	"Manacher's Algorithm": {
 		"prefix": "manacher",
 		"body": [
@@ -303,6 +311,8 @@
 		],
 		"description": "My Manacher's Algorithm's code"
 	},
+
+
 	"Lowest Common Ancestor": {
 		"prefix": "lowest-common-ancestor",
 		"body": [
@@ -368,6 +378,8 @@
 		],
 		"description": "My Lowest Common Ancestor code"
 	},
+
+
 	"Binary Lifting": {
 		"prefix": "binary-lifting",
 		"body": [
@@ -412,6 +424,8 @@
 		],
 		"description": "My binary lifting code"
 	},
+
+
 	"Time it": {
 		"prefix": "time-it",
 		"body": [
@@ -437,6 +451,8 @@
 		],
 		"description": "Code to print the execution time of a section of code"
 	},
+
+
 	"Fast Walsh Hadamard Transform": {
 		"prefix": "fast-walsh-hadamard-transform",
 		"body": [
@@ -499,6 +515,8 @@
 		],
 		"description": "My Fast Walsh Hadamard Transform code."
 	},
+
+
 	"Segment Tree with Lazy Propagation": {
 		"prefix": "segment-tree-with-lazy-propagation",
 		"body": [
@@ -606,6 +624,8 @@
 		],
 		"description": "My code for a segment tree with lazy propagation."
 	},
+
+
 	"Number Theoretic Transform": {
 		"prefix": "number-theoretic-transform",
 		"body": [
@@ -747,6 +767,8 @@
 		],
 		"description": "My Number Theoretic Transform code"
 	},
+
+
 	"Fast Modular Exponentiation": {
 		"prefix": "modexp",
 		"body": [
@@ -777,6 +799,8 @@
 		],
 		"description": "My fast modular exponentiation code"
 	},
+
+
 	"Gauss Jordan Elimination": {
 		"prefix": "gauss-jordan-elimination",
 		"body": [
@@ -859,6 +883,8 @@
 		],
 		"description": "My code to perform Gauss Jordan Elimination"
 	},
+
+	
 	"Fenwick Tree": {
 		"prefix": "fenwick-tree",
 		"body": [
