@@ -241,6 +241,11 @@
 			"\t\treturn root(x) == root(y);",
 			"\t}",
 			"",
+			"\tint size_of_component(const int x)",
+			"\t{",
+			"\t\treturn size[root(x)];",
+			"\t}",
+			"",
 			"\tint count() const",
 			"\t{",
 			"\t\treturn distinct_sets_count;",
@@ -518,115 +523,6 @@
 			"};"
 		],
 		"description": "My Fast Walsh Hadamard Transform code."
-	},
-
-
-	"Segment Tree with Lazy Propagation": {
-		"prefix": "segment-tree-with-lazy-propagation",
-		"body": [
-			"template <class elem_T = long long, class upd_T = long long>",
-			"class SegTree",
-			"{",
-			"\tprivate:",
-			"\t\tconst int underlying_array_size;",
-			"\t\tconst elem_T merge_identity = 0;",
-			"\t\tconst upd_T update_identity = 0;",
-			"\t\telem_T merge(const elem_T x, const elem_T y)",
-			"\t\t{",
-			"\t\t\treturn max(x, y);",
-			"\t\t}",
-			"\t\telem_T update_elem(const elem_T x, const upd_T y)",
-			"\t\t{",
-			"\t\t\treturn x + y;",
-			"\t\t}",
-			"\t\tupd_T update_lazy(const upd_T x, const upd_T y)",
-			"\t\t{",
-			"\t\t\treturn x + y;",
-			"\t\t}",
-			"\t\tvector<elem_T> seg_tree;",
-			"\t\tvector<upd_T> lazy;",
-			"\t\tvoid build(int node, int start, int end, vector<elem_T> &v)",
-			"\t\t{",
-			"\t\t\tif(start == end)",
-			"\t\t\t\tseg_tree[node] = v[start];",
-			"\t\t\telse",
-			"\t\t\t{",
-			"\t\t\t\tconst int mid = (start + end) / 2;",
-			"\t\t\t\tbuild(2 * node + 1, start, mid, v);",
-			"\t\t\t\tbuild(2 * node + 2, mid + 1, end, v);",
-			"\t\t\t\tseg_tree[node] = merge(seg_tree[2 * node + 1], seg_tree[2 * node + 2]);",
-			"\t\t\t}",
-			"\t\t}",
-			"\t\tvoid update_range(int node, int start, int end, int l, int r, upd_T val)",
-			"\t\t{",
-			"\t\t\tif(l <= start and end <= r)",
-			"\t\t\t\tlazy[node] = update_lazy(lazy[node], val);",
-			"\t\t\tif(lazy[node] != update_identity)",
-			"\t\t\t{",
-			"\t\t\t\tif(start != end)",
-			"\t\t\t\t{",
-			"\t\t\t\t\tlazy[2 * node + 1] = update_lazy(lazy[2 * node + 1], lazy[node]);",
-			"\t\t\t\t\tlazy[2 * node + 2] = update_lazy(lazy[2 * node + 2], lazy[node]);",
-			"\t\t\t\t}",
-			"\t\t\t\tseg_tree[node] = update_elem(seg_tree[node], lazy[node]);",
-			"\t\t\t\tlazy[node] = update_identity;",
-			"\t\t\t}",
-			"\t\t\tif(end < l or start > r)",
-			"\t\t\t\treturn;",
-			"\t\t\tif(l <= start and end <= r)",
-			"\t\t\t\treturn;",
-			"\t\t\tconst int mid = (start + end) / 2;",
-			"\t\t\tupdate_range(2 * node + 1, start, mid, l, r, val);",
-			"\t\t\tupdate_range(2 * node + 2, mid + 1, end, l, r, val);",
-			"\t\t\tseg_tree[node] = merge(seg_tree[2 * node + 1], seg_tree[2 * node + 2]);",
-			"\t\t}",
-			"\t\telem_T query(int node, int start, int end, int l, int r)",
-			"\t\t{",
-			"\t\t\tif(end < l or start > r)",
-			"\t\t\t\treturn merge_identity;",
-			"\t\t\tif(lazy[node] != update_identity)",
-			"\t\t\t{",
-			"\t\t\t\tif(start != end)",
-			"\t\t\t\t{",
-			"\t\t\t\t\tlazy[2 * node + 1] = update_lazy(lazy[2 * node + 1], lazy[node]);",
-			"\t\t\t\t\tlazy[2 * node + 2] = update_lazy(lazy[2 * node + 2], lazy[node]);",
-			"\t\t\t\t}",
-			"\t\t\t\tseg_tree[node] = update_elem(seg_tree[node], lazy[node]);",
-			"\t\t\t\tlazy[node] = update_identity;",
-			"\t\t\t}",
-			"\t\t\tif(l <= start and end <= r)",
-			"\t\t\t\treturn seg_tree[node];",
-			"\t\t\tconst int mid = (start + end) / 2;",
-			"\t\t\treturn merge(",
-			"\t\t\t\tquery(2 * node + 1, start, mid, l, r),",
-			"\t\t\t\tquery(2 * node + 2, mid + 1, end, l, r));",
-			"\t\t}",
-			"",
-			"\tpublic:",
-			"\t\tSegTree(const int n) : underlying_array_size(n)",
-			"\t\t{",
-			"\t\t\tvector<elem_T> v(underlying_array_size, merge_identity);",
-			"\t\t\tseg_tree.resize(4 * underlying_array_size, merge_identity);",
-			"\t\t\tlazy.resize(4 * underlying_array_size, update_identity);",
-			"\t\t\tbuild(0, 0, underlying_array_size - 1, v);",
-			"\t\t}",
-			"\t\tSegTree(vector<elem_T> &v) : underlying_array_size(v.size())",
-			"\t\t{",
-			"\t\t\tseg_tree.resize(4 * underlying_array_size, merge_identity);",
-			"\t\t\tlazy.resize(4 * underlying_array_size, update_identity);",
-			"\t\t\tbuild(0, 0, underlying_array_size - 1, v);",
-			"\t\t}",
-			"\t\tvoid update_range(int l, int r, upd_T val)",
-			"\t\t{",
-			"\t\t\tupdate_range(0, 0, underlying_array_size - 1, l, r, val);",
-			"\t\t}",
-			"\t\telem_T query(int l, int r)",
-			"\t\t{",
-			"\t\t\treturn query(0, 0, underlying_array_size - 1, l, r);",
-			"\t\t}",
-			"};"
-		],
-		"description": "My code for a segment tree with lazy propagation."
 	},
 
 
@@ -936,6 +832,8 @@
 		],
 		"description": "My Fenwick Tree class"
 	},
+
+	
 	"Topological Sort": {
 		"prefix": "topological-sort",
 		"body": [
@@ -973,6 +871,8 @@
 		],
 		"description": "Code for Topological Sort"
 	},
+
+
 	"Convex Hull": {
 		"prefix": "convex-hull",
 		"body": [
@@ -1022,6 +922,8 @@
 		],
 		"description": "Fully dynamic convex hull code"
 	},
+
+
 	"Undirected Graph class": {
 		"prefix": "undirected-graph",
 		"body": [
@@ -1062,6 +964,8 @@
 		],
 		"description": "Contains graph operations"
 	},
+
+
 	"Get Primes": {
 		"prefix": "get-primes-upto",
 		"body": [
@@ -1085,6 +989,8 @@
 		],
 		"description": "Get primes upto an integer n"
 	},
+
+
 	"Graph": {
 		"prefix": "graph",
 		"body": [
@@ -1120,6 +1026,8 @@
 		],
 		"description": "Graph class"
 	},
+
+
 	"Modular Polynomial": {
 		"prefix": "polynomial-modular",
 		"body": [
@@ -1255,5 +1163,115 @@
 			"};"
 		],
 		"description": "Modular polynomial class"
+	},
+
+
+	"Segment Tree with Lazy Propagation": {
+		"prefix": "segment-tree-with-lazy-propagation",
+		"body": [
+			"template <class elem_T = long long, class upd_T = long long>",
+			"class SegTree",
+			"{",
+			"\tprivate:",
+			"\t\tconst int underlying_array_size;",
+			"\t\tconst upd_T update_identity = 0;",
+			"\t\telem_T merge(const elem_T x, const elem_T y) const",
+			"\t\t{",
+			"\t\t\treturn max(x, y);",
+			"\t\t}",
+			"\t\telem_T update_elem(const elem_T x, const upd_T y) const",
+			"\t\t{",
+			"\t\t\treturn x + y;",
+			"\t\t}",
+			"\t\tupd_T update_lazy(const upd_T x, const upd_T y) const",
+			"\t\t{",
+			"\t\t\treturn x + y;",
+			"\t\t}",
+			"\t\tvector<elem_T> seg_tree;",
+			"\t\tvector<upd_T> lazy;",
+			"\t\tvoid build(const int node, const int start, const int end, const vector<elem_T> &v)",
+			"\t\t{",
+			"\t\t\tif(start == end)",
+			"\t\t\t\tseg_tree[node] = v[start];",
+			"\t\t\telse",
+			"\t\t\t{",
+			"\t\t\t\tconst int mid = (start + end) / 2;",
+			"\t\t\t\tbuild(2 * node + 1, start, mid, v);",
+			"\t\t\t\tbuild(2 * node + 2, mid + 1, end, v);",
+			"\t\t\t\tseg_tree[node] = merge(seg_tree[2 * node + 1], seg_tree[2 * node + 2]);",
+			"\t\t\t}",
+			"\t\t}",
+			"\t\tvoid update_range(const int node, const int start, const int end, const int l, const int r, const upd_T val)",
+			"\t\t{",
+			"\t\t\tif(l <= start and end <= r)",
+			"\t\t\t\tlazy[node] = update_lazy(lazy[node], val);",
+			"\t\t\tif(lazy[node] != update_identity)",
+			"\t\t\t{",
+			"\t\t\t\tif(start != end)",
+			"\t\t\t\t{",
+			"\t\t\t\t\tlazy[2 * node + 1] = update_lazy(lazy[2 * node + 1], lazy[node]);",
+			"\t\t\t\t\tlazy[2 * node + 2] = update_lazy(lazy[2 * node + 2], lazy[node]);",
+			"\t\t\t\t}",
+			"\t\t\t\tseg_tree[node] = update_elem(seg_tree[node], lazy[node]);",
+			"\t\t\t\tlazy[node] = update_identity;",
+			"\t\t\t}",
+			"\t\t\tif(end < l or start > r)",
+			"\t\t\t\treturn;",
+			"\t\t\tif(l <= start and end <= r)",
+			"\t\t\t\treturn;",
+			"\t\t\tconst int mid = (start + end) / 2;",
+			"\t\t\tupdate_range(2 * node + 1, start, mid, l, r, val);",
+			"\t\t\tupdate_range(2 * node + 2, mid + 1, end, l, r, val);",
+			"\t\t\tseg_tree[node] = merge(seg_tree[2 * node + 1], seg_tree[2 * node + 2]);",
+			"\t\t}",
+			"\t\telem_T query(const int node, const int start, const int end, const int l, const int r)",
+			"\t\t{",
+			"\t\t\tif(lazy[node] != update_identity)",
+			"\t\t\t{",
+			"\t\t\t\tif(start != end)",
+			"\t\t\t\t{",
+			"\t\t\t\t\tlazy[2 * node + 1] = update_lazy(lazy[2 * node + 1], lazy[node]);",
+			"\t\t\t\t\tlazy[2 * node + 2] = update_lazy(lazy[2 * node + 2], lazy[node]);",
+			"\t\t\t\t}",
+			"\t\t\t\tseg_tree[node] = update_elem(seg_tree[node], lazy[node]);",
+			"\t\t\t\tlazy[node] = update_identity;",
+			"\t\t\t}",
+			"\t\t\tif(l <= start and end <= r)",
+			"\t\t\t\treturn seg_tree[node];",
+			"\t\t\tconst int mid = (start + end) / 2;",
+			"\t\t\tif(r <= mid)",
+			"\t\t\t\treturn query(2 * node + 1, start, mid, l, r);",
+			"\t\t\telse if(l > mid)",
+			"\t\t\t\treturn query(2 * node + 2, mid + 1, end, l, r);",
+			"\t\t\treturn merge(",
+			"\t\t\t\tquery(2 * node + 1, start, mid, l, r),",
+			"\t\t\t\tquery(2 * node + 2, mid + 1, end, l, r));",
+			"\t\t}",
+			"",
+			"\tpublic:",
+			"\t\tSegTree(const int n, const elem_T val) : underlying_array_size(n)",
+			"\t\t{",
+			"\t\t\tconst vector<elem_T> v(underlying_array_size, val);",
+			"\t\t\tseg_tree.resize(4 * underlying_array_size, val);",
+			"\t\t\tlazy.resize(4 * underlying_array_size, update_identity);",
+			"\t\t\tbuild(0, 0, underlying_array_size - 1, v);",
+			"\t\t}",
+			"\t\tSegTree(const vector<elem_T> &v) : underlying_array_size(v.size())",
+			"\t\t{",
+			"\t\t\tseg_tree.resize(4 * underlying_array_size);",
+			"\t\t\tlazy.resize(4 * underlying_array_size, update_identity);",
+			"\t\t\tbuild(0, 0, underlying_array_size - 1, v);",
+			"\t\t}",
+			"\t\tvoid update_range(const int l, const int r, const upd_T val)",
+			"\t\t{",
+			"\t\t\tupdate_range(0, 0, underlying_array_size - 1, l, r, val);",
+			"\t\t}",
+			"\t\telem_T query(const int l, const int r)",
+			"\t\t{",
+			"\t\t\treturn query(0, 0, underlying_array_size - 1, l, r);",
+			"\t\t}",
+			"};"
+		],
+		"description": "My code for a segment tree with lazy propagation"
 	}
 }
