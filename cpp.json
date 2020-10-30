@@ -13,6 +13,7 @@
 	// 	"description": "Log output to console"
 	// }
 	
+	
 	"My Template for Competitive Programming": {
 		"prefix": "mytemplate",
 		"body": [
@@ -1274,6 +1275,8 @@
 		],
 		"description": "My code for a segment tree with lazy propagation"
 	},
+
+
 	"Longest Increasing Subsequence": {
 		"prefix": "longest-increasing-subsequence",
 		"body": [
