@@ -1701,7 +1701,7 @@
 	"Longest Proper Suffix that is also a Prefix": {
 		"prefix": "longest-proper-suffix-that-is-also-a-prefix",
 		"body": [
-			"vector<int> get_lps(string s)",
+			"vector<int> get_lps(const string& s)",
 			"{",
 			"\tvector<int> lps(s.size());",
 			"\tint l = 0;",
@@ -1721,5 +1721,46 @@
 			"}"
 		],
 		"description": "Code to find longest proper suffix that is also a prefix for all prefixes of a string"
+	},
+
+
+	"Knuth Morris Pratt": {
+		"prefix": "knuth-morris-pratt",
+		"body": [
+			"${1:longest-proper-suffix-that-is-also-a-prefix}",
+			"",
+			"class KMP",
+			"{",
+			"private:",
+			"\tconst string pattern;",
+			"\tconst vector<int> lps;",
+			"",
+			"public:",
+			"\tKMP(const string &_pattern) : pattern(_pattern), lps(get_lps(pattern)) {}",
+			"",
+			"\tvector<int> search(const string &s) const",
+			"\t{",
+			"\t\tvector<int> ans;",
+			"\t\tint l = 0;",
+			"\t\tfor(int i = 0; i < s.size(); i++)",
+			"\t\t{",
+			"\t\t\twhile(l != 0 and (l == pattern.size() or s[i] != pattern[l]))",
+			"\t\t\t{",
+			"\t\t\t\tl = lps[l - 1];",
+			"\t\t\t}",
+			"\t\t\tif(s[i] == pattern[l])",
+			"\t\t\t{",
+			"\t\t\t\tl++;",
+			"\t\t\t}",
+			"\t\t\tif(l == pattern.size())",
+			"\t\t\t{",
+			"\t\t\t\tans.push_back(i - l + 1);",
+			"\t\t\t}",
+			"\t\t}",
+			"\t\treturn ans;",
+			"\t}",
+			"};"
+		],
+		"description": "Knuth Morris Pratt"
 	}
 }
