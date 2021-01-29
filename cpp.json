@@ -753,45 +753,6 @@
 		"description": "My Fenwick Tree class"
 	},
 
-	
-	"Topological Sort": {
-		"prefix": "topological-sort",
-		"body": [
-			"class TopologicalSort",
-			"{",
-			"private:",
-			"\tstatic void dfs(int source, const vector<vector<int>>& adj, vector<int>& vis, stack<int>& rev_stack)",
-			"\t{",
-			"\t\tvis[source] = 1;",
-			"\t\tfor(int next : adj[source])",
-			"\t\t\tif(!vis[next])",
-			"\t\t\t\tdfs(next, adj, vis, rev_stack);",
-			"\t\trev_stack.push(source);",
-			"\t}",
-			"\t",
-			"public:",
-			"\t// Note that this ordering is not compatible for finding strongly connected components.",
-			"\t// This method expects a Directed Acyclic Graph.",
-			"\tstatic vector<int> get(const vector<vector<int>>& adj)",
-			"\t{",
-			"\t\tvector<int> vis(adj.size());",
-			"\t\tstack<int> rev_stack;",
-			"\t\tfor(int i = 0; i < adj.size(); i++)",
-			"\t\t\tif(!vis[i])",
-			"\t\t\t\tdfs(i, adj, vis, rev_stack);",
-			"\t\tvector<int> ordering;",
-			"\t\twhile(!rev_stack.empty())",
-			"\t\t{",
-			"\t\t\tordering.push_back(rev_stack.top());",
-			"\t\t\trev_stack.pop();",
-			"\t\t}",
-			"\t\treturn ordering;",
-			"\t}",
-			"};"
-		],
-		"description": "Code for Topological Sort"
-	},
-
 
 	"Convex Hull": {
 		"prefix": "convex-hull",
@@ -844,7 +805,7 @@
 	},
 
 
-	"Undirected Graph class": {
+	"Undirected Graph": {
 		"prefix": "undirected-graph",
 		"body": [
 			"class UndirectedGraph",
@@ -882,7 +843,7 @@
 			"\t}",
 			"};"
 		],
-		"description": "Contains graph operations"
+		"description": "Undirected graph operations"
 	},
 
 
@@ -1762,5 +1723,84 @@
 			"};"
 		],
 		"description": "Knuth Morris Pratt"
+	},
+
+
+	"Directed Graph": {
+		"prefix": "directed-graph",
+		"body": [
+			"class DirectedGraph",
+			"{",
+			"private:",
+			"\tconst vector<vector<int>> adj;",
+			"",
+			"\tbool cycle_check_dfs(int x, vector<int>& inpath, vector<int>& vis) const",
+			"\t{",
+			"\t\tvis[x] = true;",
+			"\t\tinpath[x] = true;",
+			"\t\tfor(int y : adj[x])",
+			"\t\t{",
+			"\t\t\tif(inpath[y] or (!vis[y] and cycle_check_dfs(y, inpath, vis)))",
+			"\t\t\t{",
+			"\t\t\t\treturn true;",
+			"\t\t\t}",
+			"\t\t}",
+			"\t\tinpath[x] = false;",
+			"\t\treturn false;",
+			"\t}",
+			"",
+			"\tvoid topological_sort_dfs(int source, const vector<vector<int>>& adj, vector<int>& vis, stack<int>& rev_stack)",
+			"\t{",
+			"\t\tvis[source] = 1;",
+			"\t\tfor(int next : adj[source])",
+			"\t\t{",
+			"\t\t\tif(!vis[next])",
+			"\t\t\t{",
+			"\t\t\t\ttopological_sort_dfs(next, adj, vis, rev_stack);",
+			"\t\t\t}",
+			"\t\t}",
+			"\t\trev_stack.push(source);",
+			"\t}",
+			"",
+			"public:",
+			"\tDirectedGraph(const vector<vector<int>> &_adj) : adj(_adj) {}",
+			"",
+			"\tbool contains_cycle() const",
+			"\t{",
+			"\t\tvector<int> inpath(adj.size()), vis(adj.size());",
+			"\t\tfor(int i = 0; i < adj.size(); i++)",
+			"\t\t{",
+			"\t\t\tif(!vis[i] and cycle_check_dfs(i, inpath, vis))",
+			"\t\t\t{",
+			"\t\t\t\treturn true;",
+			"\t\t\t}",
+			"\t\t}",
+			"\t\treturn false;",
+			"\t}",
+			"",
+			"\t// Note that this ordering is not compatible for finding strongly connected components.",
+			"\t// This method expects a Directed Acyclic Graph.",
+			"\tvector<int> topological_sort()",
+			"\t{",
+			"\t\tvector<int> vis(adj.size());",
+			"\t\tstack<int> rev_stack;",
+			"\t\tfor(int i = 0; i < adj.size(); i++)",
+			"\t\t{",
+			"\t\t\tif(!vis[i])",
+			"\t\t\t{",
+			"\t\t\t\ttopological_sort_dfs(i, adj, vis, rev_stack);",
+			"\t\t\t}",
+			"\t\t}",
+			"\t\tvector<int> ordering;",
+			"\t\twhile(!rev_stack.empty())",
+			"\t\t{",
+			"\t\t\tordering.push_back(rev_stack.top());",
+			"\t\t\trev_stack.pop();",
+			"\t\t}",
+			"\t\treturn ordering;",
+			"\t}",
+			"};"
+		],
+		"description": "Directed graph operations"
 	}
 }
