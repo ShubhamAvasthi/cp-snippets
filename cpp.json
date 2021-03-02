@@ -78,13 +78,6 @@
 			"\treturn out;",
 			"}",
 			"",
-			"long long gcd (long long a, long long b)",
-			"{",
-			"\tif (b > a)",
-			"\t\tswap(a, b);",
-			"\treturn (b ? gcd(b, a % b) : a);",
-			"}",
-			"",
 			"using ll   = long long;",
 			"using pii  = pair<int, int>;",
 			"using pll  = pair<long long, long long>;",
@@ -104,7 +97,6 @@
 			"#define per(i,b,a) for (int i = (b); i > (a); i--)",
 			"#define all(x)     x.begin(), x.end()",
 			"#define ret(x)     return cout << x, 0;",
-			"#define throwex    throw runtime_error (\"Found the error.\");",
 			"",
 			"const int h = 1000000007;",
 			"",
@@ -1820,5 +1812,43 @@
 			"};"
 		],
 		"description": "Lowest Common Ancestor class"
+	},
+
+
+	"Greatest Common Divisor": {
+		"prefix": "greatest-common-divisor",
+		"body": [
+			"long long gcd (long long a, long long b)",
+			"{",
+			"\twhile(b != 0)",
+			"\t{",
+			"\t\ta %= b;",
+			"\t\tswap(a, b);",
+			"\t}",
+			"\treturn a;",
+			"}"
+		],
+		"description": "Greatest Common Divisor"
+	},
+
+
+	"Extended Euclidean Algorithm": {
+		"prefix": "extended-euclidean-algorithm",
+		"body": [
+			"/* a * x + b * y = gcd(a, b) */",
+			"long long extgcd (long long a, long long b, long long& x, long long& y)",
+			"{",
+			"\tif(b == 0)",
+			"\t{",
+			"\t\tx = 1;",
+			"\t\ty = 0;",
+			"\t\treturn a;",
+			"\t}",
+			"\tlong long gcd = extgcd(b, a % b, y, x);",
+			"\ty -= a / b * x;",
+			"\treturn gcd;",
+			"}"
+		],
+		"description": "Extended Euclidean Algorithm"
 	}
 }
