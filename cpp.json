@@ -1341,7 +1341,7 @@
 			"\t\treturn modular<mod>(op) /= op2;",
 			"\t}",
 			"",
-			"\tfriend ostream& operator<<(const ostream& out, const modular<mod>& op)",
+			"\tfriend ostream& operator<<(ostream& out, const modular<mod>& op)",
 			"\t{",
 			"\t\treturn out << op.value();",
 			"\t}",
