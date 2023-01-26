@@ -2394,5 +2394,47 @@
 			"};"
 		],
 		"description": "Graph"
+	},
+
+
+	"Binary Trie": {
+		"prefix": "binary-trie",
+		"body": [
+			"struct Node {",
+			"\tstd::array<std::unique_ptr<Node>, 2> next;",
+			"};",
+			"",
+			"template <const int num_bits = 32>",
+			"class BinaryTrie {",
+			"public:",
+			"\tvoid insert(const std::bitset<num_bits> num) {",
+			"\t\tNode* node = &root;",
+			"\t\tfor (int i = num_bits - 1; i > -1; i--) {",
+			"\t\t\tif (node->next[num[i]] == nullptr) {",
+			"\t\t\t\tnode->next[num[i]] = std::make_unique<Node>();",
+			"\t\t\t}",
+			"\t\t\tnode = node->next[num[i]].get();",
+			"\t\t}",
+			"\t}",
+			"",
+			"\tstd::bitset<num_bits> max_xor_with(const std::bitset<num_bits> num) const {",
+			"\t\tstd::bitset<num_bits> ans;",
+			"\t\tNode const* node = &root;",
+			"\t\tfor (int i = num_bits - 1; i > -1; i--) {",
+			"\t\t\tif (node->next[!num[i]] != nullptr) {",
+			"\t\t\t\tans.set(i);",
+			"\t\t\t\tnode = node->next[!num[i]].get();",
+			"\t\t\t} else {",
+			"\t\t\t\tnode = node->next[num[i]].get();",
+			"\t\t\t}",
+			"\t\t}",
+			"\t\treturn ans;",
+			"\t}",
+			"",
+			"private:",
+			"\tNode root;",
+			"};"
+		],
+		"description": "Binary Trie"
 	}
 }
