@@ -2037,7 +2037,7 @@
 			"using vi   = std::vector<int>;",
 			"using vl   = std::vector<ll>;",
 			"using vvi  = std::vector<std::vector<int>>;",
-			"using vvl  = std::vector<std::vector<ll>;",
+			"using vvl  = std::vector<std::vector<ll>>;",
 			"",
 			"#define rep(i, a, b) for (int i = (a); i < (b); i++)",
 			"#define per(i, b, a) for (int i = (b); i > (a); i--)",
